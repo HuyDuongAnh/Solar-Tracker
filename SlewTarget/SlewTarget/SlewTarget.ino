@@ -1,5 +1,5 @@
-//code to move tracker based on given inputs, or with buttons 
-//buttons do not change absolute input
+/* This code tested manual control of slew drive
+*/
 
 #define actuator_retract 22
 #define actuator_extend 23
