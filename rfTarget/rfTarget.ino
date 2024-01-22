@@ -6,7 +6,6 @@
 //  This code determines the Elevation and Altitude of the Sun for a 2-Axis Tracker located on the Solar Balcony of building-13 
 //  on the campus of Cal Poly.
 //
-//  The Lion's share of this code is from...
 //
 // Calculate solar position from time and location information
 // using an RTC as a time source.
@@ -20,7 +19,7 @@
 //  Include libraries
 //
 #include <SolarPosition.h>
-#include <DS1307RTC.h>
+#include <DS1307RTC.h>    //Real Time Clock library
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
@@ -46,8 +45,8 @@ int c = 6.25;
 //SLEW variables
 volatile int countPosS = 0;    //counts in the positive direction (cw)
 volatile int countNegS = 0;    //counts in the negative direction (ccw)
-float targetS =  0;              //target (in degrees) for tracker to move to
-int calS = 112;                //counts per degree
+float targetS =  0;            //target (in degrees) for tracker to move to
+int calS = 112;                //experimental counts per degree
 volatile int countS = 0;       //number of pulses from hall effect sensor on slew drive
 int degS = 0;                  //degrees moved from initial position
 int abspS = 0;                 //apsolute position
@@ -56,9 +55,9 @@ boolean dirS = true;           //true for clockwise, false for counter-clockwise
 //ACTUATOR variables
 volatile int countPosA = 0;    //counts in the positive direction (extend)
 volatile int countNegA = 0;    //counts in the negative direction (retract)
-float targetL = 0;          //target in inches for actuator to extend
+float targetL = 0;             //target in inches for actuator to extend
 int targetA =  0;              //target (in degrees) for tracker to move to
-int calA = 203; //????                  //counts per degree
+int calA = 203;                //experimental counts per degree
 volatile int countA = 0;       //number of pulses from hall effect sensor on actuator
 int degA = 0;                  //degrees moved from initial position
 int abspA = 0;                 //apsolute position
@@ -116,17 +115,12 @@ void setup() {
 
   //initialize the lcd
   lcd.begin();  
-  //open the backlight 
+  //turn on the backlight 
   lcd.backlight(); 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-
-  /**if(radio.available()){
-      radio.read(&targetS, sizeof(targetS));
-      Serial.println(targetS);
-    }**/
 
   printTime(RTC.get());
   Serial.print(F("Cal Poly:\t"));
@@ -134,6 +128,7 @@ void loop() {
   Serial.println();
   delay(3000);
 
+  // Obtained solar position using Real Time Clock
   targetA = CalPoly.getSolarElevation(RTC.get());
   targetS = CalPoly.getSolarAzimuth(RTC.get());
 

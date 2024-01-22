@@ -1,3 +1,5 @@
+/* This code tested the receiving of RF24
+*/
 #include <SPI.h>  
 #include "RF24.h" 
 
