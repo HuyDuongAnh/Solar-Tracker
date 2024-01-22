@@ -1,5 +1,6 @@
-//this code only works with buttons, does not take written inputs
-//#define slew_drive
+/*  This setup code sets the control buttons to I/O states.
+    It also contains the logic of how the buttons control the actuator/slew motors.
+*/
 #define actuator_retract 22
 #define actuator_extend 23
 #define slew_cw 26
